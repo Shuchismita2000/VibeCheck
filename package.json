@@ -1,7 +1,7 @@
 {
-  "name": "chefflow-ai-cooking-planner",
+  "name": "vibecheck-cultural-discovery",
   "version": "1.0.0",
-  "description": "ChefFlow - AI Cooking Macro & Todo Planner",
+  "description": "VibeCheck - AI Cultural Discovery Platform",
   "main": "index.html",
   "scripts": {
     "dev": "vite",
