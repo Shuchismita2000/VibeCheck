@@ -4,9 +4,8 @@ import { fetchVibeCheck } from './gemini.js';
 lucide.createIcons();
 
 // State
-// NOTE FOR SUBMISSION: Paste your Gemini API key here so evaluators can test without their own key.
-const DEFAULT_API_KEY = "[ENCRYPTION_KEY]";
-let GEMINI_API_KEY = localStorage.getItem('vibecheck_api_key') || DEFAULT_API_KEY;
+// Hardcoded key for Hackathon Evaluator testing
+const GEMINI_API_KEY = "AIzaSyDa1T5NDznrc7bMnRNdZmL95FEFRRuU5O0";
 
 // DOM Elements
 const modal = document.getElementById('api-modal');
@@ -33,21 +32,9 @@ function updateKeyUI() {
   }
 }
 
-// Modal Logic
+// Modal Logic (Disabled since we hardcoded)
 btnConfig.addEventListener('click', () => {
-  apiKeyInput.value = GEMINI_API_KEY;
-  modal.classList.add('active');
-});
-
-btnClose.addEventListener('click', () => {
-  modal.classList.remove('active');
-});
-
-btnSave.addEventListener('click', () => {
-  GEMINI_API_KEY = apiKeyInput.value.trim();
-  localStorage.setItem('vibecheck_api_key', GEMINI_API_KEY);
-  updateKeyUI();
-  modal.classList.remove('active');
+  alert("API Key is successfully hardcoded for the Hackathon! No need to configure.");
 });
 
 // Initial UI check
