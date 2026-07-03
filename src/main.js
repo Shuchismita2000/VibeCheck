@@ -4,8 +4,8 @@ import { fetchVibeCheck } from './gemini.js';
 lucide.createIcons();
 
 // State
-// NOTE: For local development, the API key is securely loaded from your .env file.
-const DEFAULT_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
+// NOTE FOR SUBMISSION: Paste your Gemini API key here so evaluators can test without their own key.
+const DEFAULT_API_KEY = "[ENCRYPTION_KEY]";
 let GEMINI_API_KEY = localStorage.getItem('vibecheck_api_key') || DEFAULT_API_KEY;
 
 // DOM Elements
