@@ -4,7 +4,9 @@ import { fetchVibeCheck } from './gemini.js';
 lucide.createIcons();
 
 // State
-let GEMINI_API_KEY = localStorage.getItem('vibecheck_api_key') || '';
+// NOTE FOR SUBMISSION: Paste your Gemini API key here so evaluators can test without their own key.
+const DEFAULT_API_KEY = ""; 
+let GEMINI_API_KEY = localStorage.getItem('vibecheck_api_key') || DEFAULT_API_KEY;
 
 // DOM Elements
 const modal = document.getElementById('api-modal');
@@ -56,7 +58,7 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   if (!GEMINI_API_KEY) {
-    alert("Please configure your Gemini API Key first by clicking the button in the top right.");
+    alert("Please configure your Gemini API Key first by clicking the button in the top right. (Or hardcode it in main.js for evaluators)");
     modal.classList.add('active');
     return;
   }
