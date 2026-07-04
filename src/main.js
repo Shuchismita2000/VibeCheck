@@ -6,11 +6,8 @@ const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 // DOM Elements
 const modal = document.getElementById('api-modal');
-const btnConfig = document.getElementById('btn-api-config');
 const btnClose = document.getElementById('btn-api-close');
 const btnSave = document.getElementById('btn-api-save');
-const apiKeyInput = document.getElementById('api-key-input');
-const apiStatusText = document.getElementById('api-status-text');
 
 const form = document.getElementById('search-form');
 const destInput = document.getElementById('destination');
@@ -18,10 +15,6 @@ const originInput = document.getElementById('origin');
 const loadingOverlay = document.getElementById('loading-overlay');
 const resultsDashboard = document.getElementById('results-dashboard');
 
-btnConfig.addEventListener('click', () => {
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
-});
 btnClose?.addEventListener('click', () => {
   modal.classList.add('hidden');
   modal.classList.remove('flex');
@@ -30,16 +23,6 @@ btnSave?.addEventListener('click', () => {
   modal.classList.add('hidden');
   modal.classList.remove('flex');
 });
-
-function updateKeyUI() {
-  if (GEMINI_API_KEY) {
-    apiStatusText.textContent = "API Key Active";
-  } else {
-    apiStatusText.textContent = "Configure API Key";
-  }
-}
-
-updateKeyUI();
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
