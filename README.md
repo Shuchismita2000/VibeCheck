@@ -2,7 +2,7 @@
 
 VibeCheck is a GenAI-powered platform built for the "Destination Discovery & Cultural Experiences" hackathon challenge. It helps travelers discover destinations and engage with local culture in meaningful, authentic ways. 
 
-The application strictly adheres to hackathon guidelines by avoiding hardcoded data and utilizing a local Ollama model for content generation.
+The application strictly adheres to hackathon guidelines by avoiding hardcoded data and utilizing real Google Gemini API calls for content generation.
 
 ## 🌟 Key Features
 
@@ -27,17 +27,17 @@ The application strictly adheres to hackathon guidelines by avoiding hardcoded d
 
 ## 🔑 How to Use (For Evaluators)
 
-VibeCheck uses your local Ollama model, so no external API key is required.
+To comply with the rule that every feature must genuinely work without fake data, VibeCheck allows you to securely input your own API Key.
 
-1. Install and start Ollama locally.
-2. Open the app in your browser.
-3. Click the **"Ollama Info"** button in the top right corner to confirm the app is set for local Ollama usage.
-4. Enter a Destination (e.g., "Kyoto") and an Origin Country (e.g., "United States"), then click "Discover with AI".
+1. Open the app in your browser.
+2. Click the **"Configure API Key"** button in the top right corner.
+3. Paste your real **Google Gemini API Key** and click Save.
+4. Enter a Destination (e.g., "Kyoto") and an Origin Country (e.g., "United States"), then click "Check the Vibe". 
 
 ## 🛠️ Tech Stack
 - **Frontend**: Vanilla JavaScript (ES6), HTML5, CSS3
 - **Styling**: Custom Glassmorphic UI with Outfit Typography
 - **Icons**: Lucide Icons
-- **AI Model**: Local Ollama model (`llama2`)
+- **AI Model**: Google Gemini API (`gemini-1.5-flash`)
 - **Images**: Pollinations AI (Dynamic Prompt Generation)
 - **Build Tool**: Vite
