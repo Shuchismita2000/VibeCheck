@@ -61,7 +61,7 @@ form.addEventListener('submit', async (e) => {
 
   try {
     const data = await fetchVibeCheck(destination, origin, GEMINI_API_KEY);
-    renderResults(data);
+    renderResults(data, destination);
 
     // Hide loading, show results
     loadingOverlay.style.display = 'none';
@@ -84,10 +84,22 @@ function getImageUrl(keyword) {
 }
 
 // Render Results
-function renderResults(data) {
+function renderResults(data, destination) {
   // 1. Story
   document.getElementById('story-text').textContent = data.storytelling;
   document.getElementById('story-image').src = getImageUrl(data.storyImageKeyword || 'culture heritage');
+
+  // Stamp the destination onto the passport
+  const postmark = document.getElementById('postmark-destination');
+  if (postmark) postmark.textContent = destination;
+
+  const stamp = document.getElementById('vibe-stamp');
+  if (stamp) {
+    stamp.classList.remove('stamped');
+    // restart animation
+    void stamp.offsetWidth;
+    stamp.classList.add('stamped');
+  }
 
   // 2. Attractions
   const attractionsList = document.getElementById('attractions-list');

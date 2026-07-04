@@ -3,73 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VibeCheck - Cultural Discovery</title>
+  <title>VibeCheck — Cultural Discovery</title>
   <link rel="stylesheet" href="./src/style.css">
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Google Fonts: Outfit -->
+  <!-- Fonts: Fraunces (display), Inter (body), Space Mono (stamps/labels) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <!-- Header -->
   <header>
     <div class="logo-container">
-      <img src="/logo.png" alt="VibeCheck Logo" style="width: 40px; height: 40px; object-fit: contain;">
+      <img src="/logo.png" alt="VibeCheck Logo" style="width: 36px; height: 36px; object-fit: contain;">
       <div class="logo-text">VibeCheck</div>
     </div>
     <div class="header-right">
       <button class="api-badge" id="btn-api-config">
-        <i data-lucide="key" style="width: 16px; height: 16px;"></i>
+        <i data-lucide="key" style="width: 14px; height: 14px;"></i>
         <span id="api-status-text">Configure API Key</span>
       </button>
     </div>
   </header>
 
   <main>
-    <!-- Search Hero Section -->
+    <!-- Search Hero Section: the "passport cover" -->
     <div class="hero-section glass-panel">
-      <h1 class="hero-title">Discover the Vibe.</h1>
-      <p class="hero-subtitle">Enter a destination to uncover its true cultural essence, hidden gems, and authentic experiences curated by AI.</p>
-      
+      <div class="hero-eyebrow">No. 001 — Cultural Entry Visa</div>
+      <h1 class="hero-title">Discover the vibe.</h1>
+      <p class="hero-subtitle">Enter a destination to uncover its true cultural essence, hidden gems, and authentic experiences — curated by AI and stamped just for you.</p>
+
       <form id="search-form" onsubmit="return false;">
         <div class="search-grid">
           <div class="form-group">
             <label class="form-label" for="destination">Destination</label>
-            <input class="form-input" type="text" id="destination" placeholder="e.g., Kyoto, Japan" required>
+            <input class="form-input" type="text" id="destination" placeholder="Kyoto, Japan" required>
           </div>
           <div class="form-group">
-            <label class="form-label" for="origin">Your Origin Country</label>
-            <input class="form-input" type="text" id="origin" placeholder="e.g., United States" required>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Helps tailor the cultural story to your perspective.</p>
+            <label class="form-label" for="origin">Travelling from</label>
+            <input class="form-input" type="text" id="origin" placeholder="United States" required>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary" id="btn-search" style="width: 100%; margin-top: 1rem;">
-          <i data-lucide="sparkles"></i> Check the Vibe
+        <button type="submit" class="btn btn-primary" id="btn-search">
+          <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i> Check the Vibe
         </button>
       </form>
     </div>
 
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loading-overlay" style="display: none;">
-      <i data-lucide="loader-2" class="spinner" style="width: 48px; height: 48px; color: var(--accent-primary); margin-bottom: 1rem;"></i>
-      <div class="loading-text">Curating authentic experiences...</div>
-      <p style="color: var(--text-muted);">Tapping into local knowledge and heritage.</p>
+      <i data-lucide="loader-2" class="spinner" style="width: 40px; height: 40px; margin-bottom: 1rem;"></i>
+      <div class="loading-text">Stamping your dossier&hellip;</div>
+      <p style="color: var(--text-on-ink-muted);">Tapping into local knowledge and heritage.</p>
     </div>
 
     <!-- Results Dashboard -->
     <div class="dashboard" id="results-dashboard" style="display: none;">
-      
+
       <!-- Storytelling Section -->
-      <section class="story-section glass-panel fade-in">
-        <h2 class="section-title"><i data-lucide="book-open"></i> Heritage & Story</h2>
+      <section class="story-section glass-panel fade-in" style="position: relative;">
+        <div class="vibe-stamp" id="vibe-stamp"><span id="vibe-stamp-text">Vibe<br>Checked</span></div>
+        <h2 class="section-title">
+          <i data-lucide="book-open"></i> Heritage &amp; Story
+          <span class="postmark" id="postmark-destination">Entry stamp</span>
+        </h2>
         <div class="story-content">
           <div class="story-image-container">
             <img id="story-image" src="" alt="Destination Heritage">
           </div>
           <div class="story-text-container">
-            <p id="story-text" style="line-height: 1.6; font-size: 1.1rem;"></p>
+            <p id="story-text" style="line-height: 1.65; font-size: 1.08rem; font-family: var(--font-display);"></p>
           </div>
         </div>
       </section>
@@ -78,7 +82,7 @@
       <div class="grid-2-col">
         <!-- Attractions -->
         <section class="glass-panel fade-in" style="animation-delay: 0.1s;">
-          <h2 class="section-title"><i data-lucide="map-pin"></i> Top Attractions</h2>
+          <h2 class="section-title"><i data-lucide="map-pin"></i> Top Attractions <span class="postmark">Parcel 02</span></h2>
           <div class="cards-container" id="attractions-list">
             <!-- Populated via JS -->
           </div>
@@ -86,7 +90,7 @@
 
         <!-- Hidden Gems -->
         <section class="glass-panel fade-in" style="animation-delay: 0.2s;">
-          <h2 class="section-title"><i data-lucide="eye"></i> Hidden Gems</h2>
+          <h2 class="section-title"><i data-lucide="eye"></i> Hidden Gems <span class="postmark">Parcel 03</span></h2>
           <div class="cards-container" id="hidden-gems-list">
             <!-- Populated via JS -->
           </div>
@@ -94,10 +98,10 @@
       </div>
 
       <!-- Grid for Culture and Events -->
-      <div class="grid-2-col" style="margin-top: 1.5rem;">
+      <div class="grid-2-col" style="margin-top: 0;">
         <!-- Cultural Experiences -->
         <section class="glass-panel fade-in" style="animation-delay: 0.3s;">
-          <h2 class="section-title"><i data-lucide="coffee"></i> Authentic Experiences</h2>
+          <h2 class="section-title"><i data-lucide="coffee"></i> Authentic Experiences <span class="postmark">Parcel 04</span></h2>
           <div class="list-container" id="culture-list">
             <!-- Populated via JS -->
           </div>
@@ -105,7 +109,7 @@
 
         <!-- Local Events -->
         <section class="glass-panel fade-in" style="animation-delay: 0.4s;">
-          <h2 class="section-title"><i data-lucide="calendar"></i> Local Events & Festivals</h2>
+          <h2 class="section-title"><i data-lucide="calendar"></i> Local Events <span class="postmark">Parcel 05</span></h2>
           <div class="list-container" id="events-list">
             <!-- Populated via JS -->
           </div>
@@ -119,13 +123,13 @@
   <!-- Gemini API Configuration Modal -->
   <div class="modal-overlay" id="api-modal">
     <div class="modal-content glass-panel">
-      <h3 class="modal-title" style="margin-bottom: 1rem; border: none; padding: 0;">
-        <i data-lucide="settings" style="color: var(--accent-primary)"></i> API Key Setup
+      <h3 class="modal-title">
+        <i data-lucide="settings" style="color: var(--stamp-red)"></i> API Key Setup
       </h3>
-      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-        VibeCheck requires a Google Gemini API Key to function, ensuring 100% authentic GenAI responses for the hackathon evaluation.
+      <p style="font-size: 0.9rem; color: var(--text-on-paper-muted); margin: 1rem 0 1.5rem;">
+        VibeCheck needs a Google Gemini API key to generate real, AI-curated results.
       </p>
-      
+
       <div class="form-group">
         <label class="form-label" for="api-key-input">Gemini API Key</label>
         <input class="form-input" type="password" id="api-key-input" placeholder="AIzaSy...">
@@ -133,7 +137,7 @@
 
       <div class="modal-actions" style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
         <button class="btn btn-secondary" id="btn-api-close">Cancel</button>
-        <button class="btn btn-primary" id="btn-api-save">Save & Close</button>
+        <button class="btn btn-primary" id="btn-api-save">Save &amp; Close</button>
       </div>
     </div>
   </div>
