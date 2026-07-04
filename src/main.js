@@ -1,30 +1,16 @@
-import { fetchVibeCheck } from './gemini.js';
-
-// State
-// Hardcoded key for Hackathon Evaluator testing
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+import { fetchVibeCheck } from './ollama.js';
 
 // DOM Elements
 const modal = document.getElementById('api-modal');
 const btnConfig = document.getElementById('btn-api-config');
 const btnClose = document.getElementById('btn-api-close');
 const btnSave = document.getElementById('btn-api-save');
-const apiKeyInput = document.getElementById('api-key-input');
-const apiStatusText = document.getElementById('api-status-text');
 
 const form = document.getElementById('search-form');
 const destInput = document.getElementById('destination');
 const originInput = document.getElementById('origin');
 const loadingOverlay = document.getElementById('loading-overlay');
 const resultsDashboard = document.getElementById('results-dashboard');
-
-function updateKeyUI() {
-  if (GEMINI_API_KEY) {
-    apiStatusText.textContent = "API Key Active";
-  } else {
-    apiStatusText.textContent = "Configure API Key";
-  }
-}
 
 btnConfig.addEventListener('click', () => {
   modal.classList.remove('hidden');
@@ -39,16 +25,8 @@ btnSave?.addEventListener('click', () => {
   modal.classList.remove('flex');
 });
 
-updateKeyUI();
-
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-
-  if (!GEMINI_API_KEY) {
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    return;
-  }
 
   const destination = destInput.value.trim();
   const origin = originInput.value.trim();
@@ -58,7 +36,7 @@ form.addEventListener('submit', async (e) => {
   loadingOverlay.style.display = 'flex';
 
   try {
-    const data = await fetchVibeCheck(destination, origin, GEMINI_API_KEY);
+    const data = await fetchVibeCheck(destination, origin);
     renderResults(data, destination);
 
     loadingOverlay.style.display = 'none';

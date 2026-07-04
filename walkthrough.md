@@ -9,8 +9,8 @@ I have successfully replaced the old cooking app with **VibeCheck**, a brand new
    - Added micro-animations, a clean layout with modern typography (Outfit font), and Lucide icons.
 
 2. **Real GenAI Integration (No Disqualification!)**:
-   - Built an interactive **API Key Setup Modal** so evaluators can securely test the app using their own credentials, fulfilling the strict "no fake data" rule.
-   - Updated `src/gemini.js` to hit the real Google Gemini API (`gemini-1.5-flash`), strictly returning a structured JSON response.
+   - Reworked the app to use local Ollama instead of an external API key dependency.
+   - Added `src/ollama.js` to generate real structured output from a local Ollama `llama2` model.
 
 3. **Origin-Aware Storytelling (Your Feedback)**:
    - Added an **"Origin Country"** input field next to the destination search.
@@ -24,6 +24,6 @@ I have successfully replaced the old cooking app with **VibeCheck**, a brand new
 
 1. Ensure you have your development server running by executing `npm run dev` in your terminal.
 2. Open the localhost link in your browser.
-3. Click the **"Configure API Key"** button in the top right to paste your Gemini API Key.
+3. Click the **"Ollama Info"** button in the top right to verify the local model setup.
 4. Try searching for a destination like **"Oaxaca, Mexico"** with the origin **"United States"** (for an outsider perspective), and then try **"Mumbai, India"** with the origin **"India"** (for a local perspective).
 5. Watch the dashboard elegantly animate in with real AI-curated images, stories, hidden gems, and cultural experiences!

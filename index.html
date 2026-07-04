@@ -87,7 +87,7 @@
   <div class="flex items-center gap-4">
     <button id="btn-api-config" class="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-on-primary font-bold hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
       <span class="material-symbols-outlined text-[20px]">key</span>
-      <span id="api-status-text">Configure API Key</span>
+      <span>Ollama Info</span>
     </button>
   </div>
 </header>
@@ -259,21 +259,16 @@
   </div>
 </footer>
 
-<!-- Gemini API Configuration Modal -->
+<!-- Ollama Configuration Modal -->
 <div id="api-modal" class="fixed inset-0 z-[1000] hidden items-center justify-center bg-background/80 backdrop-blur-md">
   <div class="glass-card w-[90%] max-w-md p-8 rounded-[28px]">
     <h3 class="font-headline-md flex items-center gap-2 mb-2">
-      <span class="material-symbols-outlined text-primary">settings</span> API Key Setup
+      <span class="material-symbols-outlined text-primary">settings</span> Ollama Configuration
     </h3>
-    <p class="text-on-surface-variant text-sm mb-6">VibeCheck needs a Google Gemini API key to generate real, AI-curated results.</p>
-    <label class="text-label-sm text-on-surface-variant uppercase mb-1 block">Gemini API Key</label>
-    <div class="flex items-center gap-3 bg-white/5 rounded-2xl px-4 py-3 border border-white/5 focus-within:border-primary/50 transition-all mb-6">
-      <span class="material-symbols-outlined text-on-surface-variant">key</span>
-      <input id="api-key-input" class="bg-transparent border-none focus:ring-0 text-on-surface w-full" type="password" placeholder="AIzaSy..."/>
-    </div>
+    <p class="text-on-surface-variant text-sm mb-6">VibeCheck uses your local Ollama model to generate the AI travel guide.</p>
+    <p class="text-on-surface-variant text-sm mb-6">No API key is needed; just make sure Ollama is installed and running locally on <code>http://127.0.0.1:11434</code>.</p>
     <div class="flex justify-end gap-3">
-      <button id="btn-api-close" class="px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all font-bold">Cancel</button>
-      <button id="btn-api-save" class="px-6 py-3 rounded-xl bg-primary text-on-primary font-bold hover:brightness-110 transition-all">Save &amp; Close</button>
+      <button id="btn-api-close" class="px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all font-bold">Close</button>
     </div>
   </div>
 </div>
