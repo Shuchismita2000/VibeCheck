@@ -2,7 +2,7 @@ import { fetchVibeCheck } from './gemini.js';
 
 // State
 // Hardcoded key for Hackathon Evaluator testing
-const GEMINI_API_KEY = "AIzaSyDa1T5NDznrc7bMnRNdZmL95FEFRRuU5O0";
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 // DOM Elements
 const modal = document.getElementById('api-modal');
