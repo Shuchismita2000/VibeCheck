@@ -1,13 +1,17 @@
 // src/gemini.js
+// Helper module for calling the Google Gemini API and parsing the response.
 
 export async function fetchVibeCheck(destination, originCountry, apiKey) {
+  // Ensure the evaluator has provided a valid Gemini API key.
   if (!apiKey) {
     throw new Error("API Key is missing. Please configure your Gemini API Key.");
   }
 
+  // Use the Gemini 2.5 Pro model for the travel guide generation.
   const model = "gemini-2.5-pro";
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
+  // Construct a precise prompt asking for validated JSON output only.
   const prompt = `
     You are an expert travel and cultural guide.
     The user wants a "VibeCheck" for the destination: "${destination}".
@@ -75,15 +79,16 @@ export async function fetchVibeCheck(destination, originCountry, apiKey) {
       body: JSON.stringify(requestBody)
     });
 
+    // If Gemini returns an error status, capture the message.
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.error?.message || "Failed to fetch from Gemini API");
     }
 
+    // Parse the response payload and return the scraped JSON string.
     const data = await response.json();
     const resultText = data.candidates[0].content.parts[0].text;
 
-    // Parse the JSON
     return JSON.parse(resultText);
   } catch (error) {
     console.error("Gemini API Error:", error);

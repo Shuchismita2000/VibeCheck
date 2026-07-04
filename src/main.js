@@ -1,10 +1,12 @@
 import { fetchVibeCheck } from './gemini.js';
 
-// State
-// Hardcoded key for Hackathon Evaluator testing
+// Main app entry for VibeCheck.
+// Handles UI interactions, form input validation, and rendering results from Gemini.
+
+// API key loaded from environment variables for evaluator access.
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-// DOM Elements
+// Cached DOM references for the modal, form, and result display.
 const modal = document.getElementById('api-modal');
 const btnClose = document.getElementById('btn-api-close');
 const btnSave = document.getElementById('btn-api-save');
@@ -15,15 +17,18 @@ const originInput = document.getElementById('origin');
 const loadingOverlay = document.getElementById('loading-overlay');
 const resultsDashboard = document.getElementById('results-dashboard');
 
+// Modal controls for closing the API key dialog.
 btnClose?.addEventListener('click', () => {
   modal.classList.add('hidden');
   modal.classList.remove('flex');
 });
+
 btnSave?.addEventListener('click', () => {
   modal.classList.add('hidden');
   modal.classList.remove('flex');
 });
 
+// Handle the search form submit and request the VibeCheck payload.
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -53,19 +58,21 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
-// Helper for image URL via Pollinations AI
+// Helper to generate image URLs from image prompt keywords.
+// Uses Pollinations AI for simple, on-the-fly destination imagery.
 function getImageUrl(keyword, w = 800, h = 600) {
   const seed = Math.floor(Math.random() * 100000);
   return `https://image.pollinations.ai/prompt/${encodeURIComponent(keyword)}?width=${w}&height=${h}&nologo=true&seed=${seed}`;
 }
 
+// Convert an HTML string into a DOM element.
 function el(html) {
   const t = document.createElement('template');
   t.innerHTML = html.trim();
   return t.content.firstElementChild;
 }
 
-// Render Results
+// Render the structured Gemini response into the results dashboard.
 function renderResults(data, destination) {
   // Hero destination card
   document.getElementById('hero-image').src = getImageUrl(data.heroImageKeyword || data.storyImageKeyword || destination, 1600, 900);
