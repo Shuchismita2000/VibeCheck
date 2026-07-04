@@ -1,12 +1,11 @@
 // src/gemini.js
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 export async function fetchVibeCheck(destination, originCountry, apiKey) {
   if (!apiKey) {
     throw new Error("API Key is missing. Please configure your Gemini API Key.");
   }
 
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
   const prompt = `
     You are an expert travel and cultural guide.
@@ -76,16 +75,11 @@ export async function fetchVibeCheck(destination, originCountry, apiKey) {
     });
 
     if (!response.ok) {
-    const errorText = await response.text();
-    console.log(errorText);
-    throw new Error(errorText);
+      const errorData = await response.json();
+      throw new Error(errorData.error?.message || "Failed to fetch from Gemini API");
     }
 
-    const data = await fetchVibeCheck(
-      destination,
-      origin,
-      GEMINI_API_KEY
-      );
+    const data = await response.json();
     const resultText = data.candidates[0].content.parts[0].text;
 
     // Parse the JSON
