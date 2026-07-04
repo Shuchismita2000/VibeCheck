@@ -5,7 +5,8 @@ export async function fetchVibeCheck(destination, originCountry, apiKey) {
     throw new Error("API Key is missing. Please configure your Gemini API Key.");
   }
 
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  const model = "gemini-2.5-pro";
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
   const prompt = `
     You are an expert travel and cultural guide.
