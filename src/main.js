@@ -1,8 +1,13 @@
 import { fetchVibeCheck } from './gemini.js';
 
 // State
+
+import dotenv from "dotenv";
+
+dotenv.config();
+
 // Hardcoded key for Hackathon Evaluator testing
-const GEMINI_API_KEY = "AIzaSyDa1T5NDznrc7bMnRNdZmL95FEFRRuU5O0";
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 // DOM Elements
 const modal = document.getElementById('api-modal');
