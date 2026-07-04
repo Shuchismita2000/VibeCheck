@@ -1,147 +1,368 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VibeCheck — Cultural Discovery</title>
-  <link rel="stylesheet" href="./src/style.css">
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Fonts: Fraunces (display), Inter (body), Space Mono (stamps/labels) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VibeCheck | Discover the Soul Behind Every Destination</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "on-error": "#690005", "inverse-primary": "#6d3bd7", "surface-container": "#1b1f2e",
+          "on-secondary-fixed": "#001f25", "on-error-container": "#ffdad6", "error-container": "#93000a",
+          "surface-container-high": "#262939", "inverse-surface": "#dfe1f6", "on-primary-fixed": "#23005c",
+          "on-surface-variant": "#cbc3d7", "surface-dim": "#0f1321", "secondary-fixed": "#a2eeff",
+          "surface-container-low": "#171b2a", "on-primary-container": "#340080", "surface-container-lowest": "#0a0d1c",
+          "secondary-container": "#00cbe6", "on-secondary-container": "#00515d", "tertiary-fixed": "#6ffbbe",
+          "inverse-on-surface": "#2c303f", "surface-tint": "#d0bcff", "tertiary": "#4edea3",
+          "on-tertiary-container": "#00311f", "tertiary-container": "#00a572", "primary": "#d0bcff",
+          "error": "#ffb4ab", "primary-fixed-dim": "#d0bcff", "tertiary-fixed-dim": "#4edea3",
+          "outline-variant": "#494454", "outline": "#958ea0", "background": "#0f1321",
+          "on-secondary": "#00363e", "on-surface": "#dfe1f6", "surface-container-highest": "#303444",
+          "surface": "#0f1321", "on-background": "#dfe1f6", "on-tertiary-fixed-variant": "#005236",
+          "surface-variant": "#303444", "on-primary-fixed-variant": "#5516be", "primary-container": "#a078ff",
+          "surface-bright": "#353849", "on-tertiary": "#003824", "secondary-fixed-dim": "#2fd9f4",
+          "on-tertiary-fixed": "#002113", "on-primary": "#3c0091", "secondary": "#5de6ff",
+          "primary-fixed": "#e9ddff", "on-secondary-fixed-variant": "#004e5a"
+        },
+        borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1.5rem", "3xl": "1.75rem", "full": "9999px" },
+        spacing: { "unit": "8px", "margin-mobile": "20px", "container-max": "1440px", "section-gap": "120px", "margin-desktop": "80px", "gutter": "24px" },
+        fontFamily: {
+          "display-xl": ["Outfit"], "headline-md": ["Outfit"], "body-md": ["Inter"],
+          "display-lg": ["Outfit"], "display-lg-mobile": ["Outfit"], "label-sm": ["Inter"], "body-lg": ["Inter"]
+        },
+        fontSize: {
+          "display-xl": ["72px", { "lineHeight": "80px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+          "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+          "body-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+          "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+          "display-lg-mobile": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+          "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+          "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1); }
+  .text-glow { text-shadow: 0 0 20px rgba(208, 188, 255, 0.3); }
+  .hero-gradient {
+    background: radial-gradient(circle at top right, rgba(93, 230, 255, 0.15), transparent),
+                radial-gradient(circle at bottom left, rgba(208, 188, 255, 0.1), transparent);
+  }
+  .stagger-in > * { opacity: 0; transform: translateY(20px); animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+  .drop-cap::first-letter {
+    font-family: 'Outfit'; font-size: 4rem; font-weight: 800; float: left; margin-right: 0.75rem; line-height: 1;
+    background: linear-gradient(to bottom, #d0bcff, #a078ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .spinner { animation: spin 1.4s linear infinite; }
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+</style>
 </head>
-<body>
+<body class="bg-background text-on-background font-body-md selection:bg-primary/30 overflow-x-hidden">
 
-  <!-- Header -->
-  <header>
-    <div class="logo-container">
-      <img src="/logo.png" alt="VibeCheck Logo" style="width: 36px; height: 36px; object-fit: contain;">
-      <div class="logo-text">VibeCheck</div>
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-20 w-full border-b border-white/10 bg-surface/5 backdrop-blur-2xl">
+  <div class="flex items-center gap-2 group cursor-pointer">
+    <span class="material-symbols-outlined text-primary text-3xl group-hover:rotate-45 transition-transform duration-500">explore</span>
+    <span class="font-display-lg text-headline-md font-bold tracking-tight text-primary">VibeCheck</span>
+  </div>
+  <nav class="hidden md:flex items-center gap-8">
+    <a class="font-body-md text-primary font-bold border-b-2 border-primary pb-1" href="#discover">Discover</a>
+    <a class="font-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#experiences">Experiences</a>
+    <a class="font-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#culture">Culture</a>
+  </nav>
+  <div class="flex items-center gap-4">
+    <button id="btn-api-config" class="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-on-primary font-bold hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
+      <span class="material-symbols-outlined text-[20px]">key</span>
+      <span id="api-status-text">Configure API Key</span>
+    </button>
+  </div>
+</header>
+
+<main class="relative">
+  <!-- Hero Section -->
+  <section id="discover" class="relative min-h-screen flex items-center justify-center pt-20 px-margin-mobile overflow-hidden hero-gradient">
+    <div class="absolute inset-0 w-full h-full opacity-80 pointer-events-none">
+      <canvas id="shader-canvas-vibecheck" style="display:block;width:100%;height:100%"></canvas>
     </div>
-    <div class="header-right">
-      <button class="api-badge" id="btn-api-config">
-        <i data-lucide="key" style="width: 14px; height: 14px;"></i>
-        <span id="api-status-text">Configure API Key</span>
-      </button>
-    </div>
-  </header>
 
-  <main>
-    <!-- Search Hero Section: the "passport cover" -->
-    <div class="hero-section glass-panel">
-      <div class="hero-eyebrow">No. 001 — Cultural Entry Visa</div>
-      <h1 class="hero-title">Discover the vibe.</h1>
-      <p class="hero-subtitle">Enter a destination to uncover its true cultural essence, hidden gems, and authentic experiences — curated by AI and stamped just for you.</p>
+    <div class="relative z-10 max-w-4xl text-center stagger-in">
+      <h1 class="font-display-xl text-display-lg-mobile md:text-display-xl mb-6 text-glow leading-tight">
+        Discover the Soul Behind <br class="hidden md:block"/>Every Destination
+      </h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
+        Instead of searching for places, discover experiences crafted uniquely for you by our AI travel concierge.
+      </p>
 
-      <form id="search-form" onsubmit="return false;">
-        <div class="search-grid">
-          <div class="form-group">
-            <label class="form-label" for="destination">Destination</label>
-            <input class="form-input" type="text" id="destination" placeholder="Kyoto, Japan" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="origin">Travelling from</label>
-            <input class="form-input" type="text" id="origin" placeholder="United States" required>
+      <!-- AI Search Panel -->
+      <form id="search-form" onsubmit="return false;" class="glass-card p-4 md:p-6 rounded-3xl max-w-3xl mx-auto shadow-2xl flex flex-col md:flex-row items-center gap-4 border-white/20">
+        <div class="flex-1 w-full text-left">
+          <label class="text-label-sm text-on-surface-variant uppercase ml-4 mb-1 block" for="destination">Destination</label>
+          <div class="flex items-center gap-3 bg-white/5 rounded-2xl px-4 py-3 border border-white/5 focus-within:border-primary/50 transition-all">
+            <span class="material-symbols-outlined text-on-surface-variant">location_on</span>
+            <input id="destination" class="bg-transparent border-none focus:ring-0 text-on-surface font-semibold w-full" type="text" placeholder="Kyoto, Japan" required/>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary" id="btn-search">
-          <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i> Check the Vibe
+        <div class="flex-1 w-full text-left">
+          <label class="text-label-sm text-on-surface-variant uppercase ml-4 mb-1 block" for="origin">Origin</label>
+          <div class="flex items-center gap-3 bg-white/5 rounded-2xl px-4 py-3 border border-white/5 focus-within:border-primary/50 transition-all">
+            <span class="material-symbols-outlined text-on-surface-variant">flight_takeoff</span>
+            <input id="origin" class="bg-transparent border-none focus:ring-0 text-on-surface font-semibold w-full" type="text" placeholder="Toronto, Canada" required/>
+          </div>
+        </div>
+        <button type="submit" id="btn-search" class="w-full md:w-auto h-14 px-8 rounded-2xl bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container font-bold flex items-center justify-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-xl shadow-primary/20 whitespace-nowrap">
+          <span class="material-symbols-outlined">auto_awesome</span>
+          Discover with AI
         </button>
       </form>
     </div>
 
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loading-overlay" style="display: none;">
-      <i data-lucide="loader-2" class="spinner" style="width: 40px; height: 40px; margin-bottom: 1rem;"></i>
-      <div class="loading-text">Stamping your dossier&hellip;</div>
-      <p style="color: var(--text-on-ink-muted);">Tapping into local knowledge and heritage.</p>
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 animate-bounce">
+      <span class="text-label-sm tracking-[0.2em] uppercase">Scroll</span>
+      <span class="material-symbols-outlined">expand_more</span>
     </div>
+  </section>
 
-    <!-- Results Dashboard -->
-    <div class="dashboard" id="results-dashboard" style="display: none;">
+  <!-- Loading State -->
+  <section id="loading-overlay" style="display:none;" class="relative z-10 px-margin-mobile py-32 flex flex-col items-center justify-center text-center">
+    <span class="material-symbols-outlined spinner text-primary text-5xl mb-4">progress_activity</span>
+    <div class="font-display-lg text-headline-md text-glow mb-2">Curating your dossier&hellip;</div>
+    <p class="text-on-surface-variant">Tapping into local knowledge and heritage.</p>
+  </section>
 
-      <!-- Storytelling Section -->
-      <section class="story-section glass-panel fade-in" style="position: relative;">
-        <div class="vibe-stamp" id="vibe-stamp"><span id="vibe-stamp-text">Vibe<br>Checked</span></div>
-        <h2 class="section-title">
-          <i data-lucide="book-open"></i> Heritage &amp; Story
-          <span class="postmark" id="postmark-destination">Entry stamp</span>
-        </h2>
-        <div class="story-content">
-          <div class="story-image-container">
-            <img id="story-image" src="" alt="Destination Heritage">
-          </div>
-          <div class="story-text-container">
-            <p id="story-text" style="line-height: 1.65; font-size: 1.08rem; font-family: var(--font-display);"></p>
-          </div>
+  <!-- Results Dashboard -->
+  <section id="results-dashboard" style="display:none;" class="relative z-10 px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto space-y-section-gap">
+
+    <!-- Hero Destination Card -->
+    <div class="relative w-full h-[600px] rounded-[28px] overflow-hidden glass-card group">
+      <img id="hero-image" class="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-1000 ease-out" src="" alt=""/>
+      <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 w-full p-8 md:p-12 stagger-in">
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span id="chip-climate" class="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-label-sm flex items-center gap-2">
+            <span class="material-symbols-outlined text-[16px]">partly_cloudy_day</span> <span id="chip-climate-text"></span>
+          </span>
+          <span id="chip-vibe" class="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-label-sm flex items-center gap-2">
+            <span class="material-symbols-outlined text-[16px]">spa</span> <span id="chip-vibe-text"></span>
+          </span>
+          <span class="px-4 py-1.5 rounded-full bg-tertiary/20 backdrop-blur-md border border-tertiary/30 text-tertiary text-label-sm flex items-center gap-2">
+            <span class="material-symbols-outlined text-[16px]">verified</span> Recommended for you
+          </span>
         </div>
-      </section>
-
-      <!-- Grid for Attractions and Gems -->
-      <div class="grid-2-col">
-        <!-- Attractions -->
-        <section class="glass-panel fade-in" style="animation-delay: 0.1s;">
-          <h2 class="section-title"><i data-lucide="map-pin"></i> Top Attractions <span class="postmark">Parcel 02</span></h2>
-          <div class="cards-container" id="attractions-list">
-            <!-- Populated via JS -->
-          </div>
-        </section>
-
-        <!-- Hidden Gems -->
-        <section class="glass-panel fade-in" style="animation-delay: 0.2s;">
-          <h2 class="section-title"><i data-lucide="eye"></i> Hidden Gems <span class="postmark">Parcel 03</span></h2>
-          <div class="cards-container" id="hidden-gems-list">
-            <!-- Populated via JS -->
-          </div>
-        </section>
+        <h2 id="destination-title" class="font-display-xl text-display-lg md:text-display-xl mb-4"></h2>
+        <p id="destination-tagline" class="font-body-lg text-on-surface-variant max-w-2xl"></p>
       </div>
-
-      <!-- Grid for Culture and Events -->
-      <div class="grid-2-col" style="margin-top: 0;">
-        <!-- Cultural Experiences -->
-        <section class="glass-panel fade-in" style="animation-delay: 0.3s;">
-          <h2 class="section-title"><i data-lucide="coffee"></i> Authentic Experiences <span class="postmark">Parcel 04</span></h2>
-          <div class="list-container" id="culture-list">
-            <!-- Populated via JS -->
-          </div>
-        </section>
-
-        <!-- Local Events -->
-        <section class="glass-panel fade-in" style="animation-delay: 0.4s;">
-          <h2 class="section-title"><i data-lucide="calendar"></i> Local Events <span class="postmark">Parcel 05</span></h2>
-          <div class="list-container" id="events-list">
-            <!-- Populated via JS -->
-          </div>
-        </section>
-      </div>
-
     </div>
 
-  </main>
-
-  <!-- Gemini API Configuration Modal -->
-  <div class="modal-overlay" id="api-modal">
-    <div class="modal-content glass-panel">
-      <h3 class="modal-title">
-        <i data-lucide="settings" style="color: var(--stamp-red)"></i> API Key Setup
-      </h3>
-      <p style="font-size: 0.9rem; color: var(--text-on-paper-muted); margin: 1rem 0 1.5rem;">
-        VibeCheck needs a Google Gemini API key to generate real, AI-curated results.
-      </p>
-
-      <div class="form-group">
-        <label class="form-label" for="api-key-input">Gemini API Key</label>
-        <input class="form-input" type="password" id="api-key-input" placeholder="AIzaSy...">
+    <!-- Heritage Story Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center">
+      <div class="relative rounded-[28px] overflow-hidden aspect-[4/5] glass-card shadow-2xl">
+        <img id="story-image" class="w-full h-full object-cover" src="" alt="Destination Heritage"/>
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-40"></div>
       </div>
-
-      <div class="modal-actions" style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
-        <button class="btn btn-secondary" id="btn-api-close">Cancel</button>
-        <button class="btn btn-primary" id="btn-api-save">Save &amp; Close</button>
+      <div class="lg:pl-12 space-y-8">
+        <h3 class="font-display-lg text-display-lg leading-tight">The Soul of <span id="destination-name-inline"></span></h3>
+        <p id="story-text" class="text-on-surface-variant drop-cap leading-relaxed font-body-lg"></p>
       </div>
+    </div>
+
+    <!-- Cultural Perspectives -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+      <div class="glass-card p-10 rounded-[28px] border-l-4 border-l-primary hover:-translate-y-2 transition-transform duration-500">
+        <div class="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center mb-8">
+          <span class="material-symbols-outlined text-primary text-3xl">home_pin</span>
+        </div>
+        <h4 class="font-headline-md mb-4">As a Local</h4>
+        <p id="local-perspective-text" class="text-on-surface-variant font-body-md leading-relaxed"></p>
+      </div>
+      <div class="glass-card p-10 rounded-[28px] border-l-4 border-l-secondary hover:-translate-y-2 transition-transform duration-500">
+        <div class="w-16 h-16 rounded-2xl bg-secondary/20 flex items-center justify-center mb-8">
+          <span class="material-symbols-outlined text-secondary text-3xl">map</span>
+        </div>
+        <h4 class="font-headline-md mb-4">As a Visitor</h4>
+        <p id="visitor-perspective-text" class="text-on-surface-variant font-body-md leading-relaxed"></p>
+      </div>
+    </div>
+
+    <!-- Top Attractions (Carousel) -->
+    <div class="space-y-8" id="experiences">
+      <div class="flex justify-between items-end">
+        <div>
+          <h3 class="font-display-lg text-headline-md md:text-display-lg">Top Attractions</h3>
+          <p class="text-on-surface-variant font-body-md">The landmarks that define this destination.</p>
+        </div>
+      </div>
+      <div id="attractions-list" class="flex gap-gutter overflow-x-auto pb-8 snap-x no-scrollbar">
+        <!-- Populated via JS -->
+      </div>
+    </div>
+
+    <!-- Culinary / Cultural Experiences (Carousel) -->
+    <div class="space-y-8">
+      <div class="flex justify-between items-end">
+        <div>
+          <h3 class="font-display-lg text-headline-md md:text-display-lg">Culinary &amp; Cultural Traditions</h3>
+          <p class="text-on-surface-variant font-body-md">Savor the destination's seasonal, authentic flavor.</p>
+        </div>
+      </div>
+      <div id="culture-list" class="flex gap-gutter overflow-x-auto pb-8 snap-x no-scrollbar">
+        <!-- Populated via JS -->
+      </div>
+    </div>
+
+    <!-- Hidden Gems Grid -->
+    <div class="space-y-8" id="culture">
+      <h3 class="font-display-lg text-headline-md md:text-display-lg">Hidden Gems</h3>
+      <div id="hidden-gems-list" class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+        <!-- Populated via JS -->
+      </div>
+    </div>
+
+    <!-- Local Events -->
+    <div class="space-y-8">
+      <h3 class="font-display-lg text-headline-md md:text-display-lg">Local Events &amp; Festivals</h3>
+      <div id="events-list" class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+        <!-- Populated via JS -->
+      </div>
+    </div>
+
+    <!-- Quick Facts (Floating) -->
+    <div id="quick-facts" class="flex flex-wrap justify-center gap-6 stagger-in">
+      <!-- Populated via JS -->
+    </div>
+
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="border-t border-white/5 py-12 px-margin-mobile md:px-margin-desktop bg-surface-container-lowest">
+  <div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary text-2xl">explore</span>
+      <span class="font-display-lg text-headline-md font-bold text-primary">VibeCheck</span>
+    </div>
+    <p class="text-on-surface-variant text-label-sm">Cultural discovery, curated by AI &mdash; crafting souls for destinations.</p>
+  </div>
+</footer>
+
+<!-- Gemini API Configuration Modal -->
+<div id="api-modal" class="fixed inset-0 z-[1000] hidden items-center justify-center bg-background/80 backdrop-blur-md">
+  <div class="glass-card w-[90%] max-w-md p-8 rounded-[28px]">
+    <h3 class="font-headline-md flex items-center gap-2 mb-2">
+      <span class="material-symbols-outlined text-primary">settings</span> API Key Setup
+    </h3>
+    <p class="text-on-surface-variant text-sm mb-6">VibeCheck needs a Google Gemini API key to generate real, AI-curated results.</p>
+    <label class="text-label-sm text-on-surface-variant uppercase mb-1 block">Gemini API Key</label>
+    <div class="flex items-center gap-3 bg-white/5 rounded-2xl px-4 py-3 border border-white/5 focus-within:border-primary/50 transition-all mb-6">
+      <span class="material-symbols-outlined text-on-surface-variant">key</span>
+      <input id="api-key-input" class="bg-transparent border-none focus:ring-0 text-on-surface w-full" type="password" placeholder="AIzaSy..."/>
+    </div>
+    <div class="flex justify-end gap-3">
+      <button id="btn-api-close" class="px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all font-bold">Cancel</button>
+      <button id="btn-api-save" class="px-6 py-3 rounded-xl bg-primary text-on-primary font-bold hover:brightness-110 transition-all">Save &amp; Close</button>
     </div>
   </div>
+</div>
 
-  <script type="module" src="./src/main.js"></script>
+<script>
+  // Intersection Observer for stagger-in animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const children = entry.target.querySelectorAll('.stagger-in > *');
+        children.forEach((child, index) => { child.style.animationDelay = `${index * 0.1}s`; });
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.stagger-in').forEach(el => observer.observe(el));
+</script>
+<script>
+  // Background WebGL "flight path" map shader for the hero
+  (function() {
+    const canvas = document.getElementById('shader-canvas-vibecheck');
+    function syncSize() {
+      const w = canvas.clientWidth || 1280, h = canvas.clientHeight || 720;
+      if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+    }
+    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncSize).observe(canvas);
+    syncSize();
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) return;
+    const vs = `attribute vec2 a_position; varying vec2 v_texCoord;
+      void main() { v_texCoord = a_position * 0.5 + 0.5; gl_Position = vec4(a_position, 0.0, 1.0); }`;
+    const fs = `precision highp float;
+      uniform float u_time; uniform vec2 u_resolution; varying vec2 v_texCoord;
+      float hash(vec2 p){ p=fract(p*vec2(123.34,456.21)); p+=dot(p,p+45.32); return fract(p.x*p.y); }
+      float noise(vec2 p){ vec2 i=floor(p),f=fract(p);
+        float a=hash(i),b=hash(i+vec2(1.,0.)),c=hash(i+vec2(0.,1.)),d=hash(i+vec2(1.,1.));
+        vec2 u=f*f*(3.-2.*f); return mix(a,b,u.x)+(c-a)*u.y*(1.-u.x)+(d-b)*u.x*u.y; }
+      void main() {
+        vec2 uv = v_texCoord; float time = u_time * 0.5;
+        vec3 color = vec3(0.02, 0.03, 0.09);
+        vec2 gridCount = vec2(120.0, 60.0);
+        vec2 grid = uv * gridCount; vec2 ipos = floor(grid); vec2 fpos = fract(grid);
+        float mapMask = noise(ipos * 0.08 + vec2(10.0, 20.0));
+        mapMask = smoothstep(0.42, 0.55, mapMask);
+        float dist = length(fpos - 0.5);
+        float dotMask = smoothstep(0.25, 0.20, dist);
+        vec3 landColor = vec3(0.3, 0.4, 0.7); vec3 waterColor = vec3(0.1, 0.15, 0.2);
+        color += mix(waterColor, landColor, mapMask) * dotMask * 0.4;
+        vec2 pin1 = vec2(0.25, 0.65); vec2 pin2 = vec2(0.85, 0.55);
+        float t = clamp((uv.x - pin1.x) / (pin2.x - pin1.x), 0.0, 1.0);
+        vec2 posOnCurve = mix(pin1, pin2, t); posOnCurve.y += sin(t * 3.14159) * 0.18;
+        float stringDist = length(uv - posOnCurve);
+        float stringMask = smoothstep(0.006, 0.003, stringDist);
+        float pulsePos = mod(time * 0.6, 1.3) - 0.15;
+        float pulse = smoothstep(0.15, 0.0, abs(t - pulsePos));
+        color = mix(color, vec3(1.0, 0.1, 0.1), stringMask * 0.4);
+        color += vec3(1.0, 0.4, 0.4) * stringMask * pulse * 3.0;
+        float p1 = smoothstep(0.012, 0.008, length(uv - pin1));
+        float p2 = smoothstep(0.012, 0.008, length(uv - pin2));
+        float g1 = smoothstep(0.06, 0.0, length(uv - pin1));
+        float g2 = smoothstep(0.06, 0.0, length(uv - pin2));
+        color = mix(color, vec3(1.0, 1.0, 1.0), p1 + p2);
+        color += vec3(0.5, 0.4, 1.0) * (g1 + g2) * (0.6 + 0.4 * sin(time * 3.0)) * 0.4;
+        color *= 1.0 - length(uv - 0.5) * 0.6;
+        gl_FragColor = vec4(color, 1.0);
+      }`;
+    function cs(type, src) { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
+    const prog = gl.createProgram();
+    gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+    gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+    gl.linkProgram(prog); gl.useProgram(prog);
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+    const pos = gl.getAttribLocation(prog, 'a_position');
+    gl.enableVertexAttribArray(pos);
+    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+    const uTime = gl.getUniformLocation(prog, 'u_time');
+    const uRes = gl.getUniformLocation(prog, 'u_resolution');
+    function render(t) {
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      if (uTime) gl.uniform1f(uTime, t * 0.001);
+      if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      requestAnimationFrame(render);
+    }
+    render(0);
+  })();
+</script>
+
+<script type="module" src="./src/main.js"></script>
 </body>
 </html>

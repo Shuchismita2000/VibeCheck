@@ -1,8 +1,5 @@
 import { fetchVibeCheck } from './gemini.js';
 
-// Initialize Lucide Icons
-lucide.createIcons();
-
 // State
 // Hardcoded key for Hackathon Evaluator testing
 const GEMINI_API_KEY = "AIzaSyDa1T5NDznrc7bMnRNdZmL95FEFRRuU5O0";
@@ -21,41 +18,42 @@ const originInput = document.getElementById('origin');
 const loadingOverlay = document.getElementById('loading-overlay');
 const resultsDashboard = document.getElementById('results-dashboard');
 
-// Update UI based on key presence
 function updateKeyUI() {
   if (GEMINI_API_KEY) {
     apiStatusText.textContent = "API Key Active";
-    apiStatusText.style.color = "#4ade80"; // green
   } else {
     apiStatusText.textContent = "Configure API Key";
-    apiStatusText.style.color = "var(--text-muted)";
   }
 }
 
-// Modal Logic (Disabled since we hardcoded)
 btnConfig.addEventListener('click', () => {
-  alert("API Key is successfully hardcoded for the Hackathon! No need to configure.");
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+});
+btnClose?.addEventListener('click', () => {
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+});
+btnSave?.addEventListener('click', () => {
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
 });
 
-// Initial UI check
 updateKeyUI();
 
-// Form Submit
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   if (!GEMINI_API_KEY) {
-    alert("Please configure your Gemini API Key first by clicking the button in the top right. (Or hardcode it in main.js for evaluators)");
-    modal.classList.add('active');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
     return;
   }
 
   const destination = destInput.value.trim();
   const origin = originInput.value.trim();
-
   if (!destination || !origin) return;
 
-  // Show loading
   resultsDashboard.style.display = 'none';
   loadingOverlay.style.display = 'flex';
 
@@ -63,13 +61,9 @@ form.addEventListener('submit', async (e) => {
     const data = await fetchVibeCheck(destination, origin, GEMINI_API_KEY);
     renderResults(data, destination);
 
-    // Hide loading, show results
     loadingOverlay.style.display = 'none';
-    resultsDashboard.style.display = 'flex';
-
-    // Re-initialize icons in the new DOM elements
-    lucide.createIcons();
-
+    resultsDashboard.style.display = 'block';
+    resultsDashboard.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (error) {
     loadingOverlay.style.display = 'none';
     alert(`Error: ${error.message}`);
@@ -77,69 +71,127 @@ form.addEventListener('submit', async (e) => {
 });
 
 // Helper for image URL via Pollinations AI
-function getImageUrl(keyword) {
-  // Generate a random seed to avoid caching identical images if keywords match
+function getImageUrl(keyword, w = 800, h = 600) {
   const seed = Math.floor(Math.random() * 100000);
-  return `https://image.pollinations.ai/prompt/${encodeURIComponent(keyword)}?width=800&height=600&nologo=true&seed=${seed}`;
+  return `https://image.pollinations.ai/prompt/${encodeURIComponent(keyword)}?width=${w}&height=${h}&nologo=true&seed=${seed}`;
+}
+
+function el(html) {
+  const t = document.createElement('template');
+  t.innerHTML = html.trim();
+  return t.content.firstElementChild;
 }
 
 // Render Results
 function renderResults(data, destination) {
-  // 1. Story
-  document.getElementById('story-text').textContent = data.storytelling;
+  // Hero destination card
+  document.getElementById('hero-image').src = getImageUrl(data.heroImageKeyword || data.storyImageKeyword || destination, 1600, 900);
+  document.getElementById('destination-title').textContent = destination;
+  document.getElementById('destination-tagline').textContent = data.tagline || '';
+  document.getElementById('destination-name-inline').textContent = destination;
+  document.getElementById('chip-climate-text').textContent = data.climateNote || '';
+  document.getElementById('chip-vibe-text').textContent = data.vibeTag || '';
+
+  // Story
+  document.getElementById('story-text').textContent = data.storytelling || '';
   document.getElementById('story-image').src = getImageUrl(data.storyImageKeyword || 'culture heritage');
 
-  // Stamp the destination onto the passport
-  const postmark = document.getElementById('postmark-destination');
-  if (postmark) postmark.textContent = destination;
+  // Perspectives
+  document.getElementById('local-perspective-text').textContent = data.localPerspective || '';
+  document.getElementById('visitor-perspective-text').textContent = data.visitorPerspective || '';
 
-  const stamp = document.getElementById('vibe-stamp');
-  if (stamp) {
-    stamp.classList.remove('stamped');
-    // restart animation
-    void stamp.offsetWidth;
-    stamp.classList.add('stamped');
-  }
-
-  // 2. Attractions
+  // Attractions carousel
   const attractionsList = document.getElementById('attractions-list');
-  attractionsList.innerHTML = data.attractions.map(item => `
-    <div class="card">
-      <img src="${getImageUrl(item.imageKeyword || item.name)}" alt="${item.name}" class="card-img">
-      <div class="card-content">
-        <h3 class="card-title">${item.name}</h3>
-        <p class="card-desc">${item.description}</p>
+  attractionsList.innerHTML = '';
+  (data.attractions || []).forEach(item => {
+    attractionsList.appendChild(el(`
+      <div class="min-w-[300px] md:min-w-[420px] snap-start glass-card rounded-[28px] overflow-hidden group">
+        <div class="h-72 overflow-hidden">
+          <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="${getImageUrl(item.imageKeyword || item.name)}" alt="${item.name}">
+        </div>
+        <div class="p-8">
+          <h5 class="font-headline-md mb-2">${item.name}</h5>
+          <p class="text-on-surface-variant">${item.description || ''}</p>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `));
+  });
 
-  // 3. Hidden Gems
-  const gemsList = document.getElementById('hidden-gems-list');
-  gemsList.innerHTML = data.hiddenGems.map(item => `
-    <div class="card">
-      <img src="${getImageUrl(item.imageKeyword || item.name)}" alt="${item.name}" class="card-img">
-      <div class="card-content">
-        <h3 class="card-title">${item.name}</h3>
-        <p class="card-desc">${item.description}</p>
-      </div>
-    </div>
-  `).join('');
-
-  // 4. Cultural Experiences
+  // Culinary / cultural experiences carousel
   const cultureList = document.getElementById('culture-list');
-  cultureList.innerHTML = data.culturalExperiences.map(item => `
-    <div class="list-item">
-      <i data-lucide="sparkles" class="list-icon"></i>
-      <div class="list-text">${item}</div>
-    </div>
-  `).join('');
+  cultureList.innerHTML = '';
+  (data.culturalExperiences || []).forEach(item => {
+    if (typeof item === 'string') {
+      cultureList.appendChild(el(`
+        <div class="min-w-[300px] md:min-w-[420px] snap-start glass-card rounded-[28px] p-8">
+          <p class="text-on-surface-variant">${item}</p>
+        </div>
+      `));
+      return;
+    }
+    cultureList.appendChild(el(`
+      <div class="min-w-[300px] md:min-w-[420px] snap-start glass-card rounded-[28px] overflow-hidden group">
+        <div class="h-72 overflow-hidden">
+          <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="${getImageUrl(item.imageKeyword || item.name)}" alt="${item.name}">
+        </div>
+        <div class="p-8">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-label-sm text-primary uppercase font-bold tracking-widest">${item.tag || 'Experience'}</span>
+            <span class="text-label-sm text-on-surface-variant">${item.priceTier || ''}</span>
+          </div>
+          <h5 class="font-headline-md mb-2">${item.name}</h5>
+          <p class="text-on-surface-variant">${item.description || ''}</p>
+        </div>
+      </div>
+    `));
+  });
 
-  // 5. Events
+  // Hidden gems grid
+  const gemsList = document.getElementById('hidden-gems-list');
+  gemsList.innerHTML = '';
+  (data.hiddenGems || []).forEach(item => {
+    gemsList.appendChild(el(`
+      <div class="group cursor-pointer">
+        <div class="aspect-square rounded-[28px] overflow-hidden mb-4 relative">
+          <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="${getImageUrl(item.imageKeyword || item.name)}" alt="${item.name}">
+        </div>
+        <h6 class="font-headline-md text-body-lg font-bold group-hover:text-primary transition-colors">${item.name}</h6>
+        <p class="text-on-surface-variant text-label-sm">${item.area || item.description || ''}</p>
+      </div>
+    `));
+  });
+
+  // Local events
   const eventsList = document.getElementById('events-list');
-  eventsList.innerHTML = data.localEvents.map(item => `
-    <div class="list-item">
-      <i data-lucide="calendar-heart" class="list-icon"></i>
-      <div class="list-text">${item}</div>
-    </div>
-  `).join('');
+  eventsList.innerHTML = '';
+  (data.localEvents || []).forEach(item => {
+    eventsList.appendChild(el(`
+      <div class="glass-card p-6 rounded-[24px] flex items-start gap-4">
+        <span class="material-symbols-outlined text-secondary">calendar_month</span>
+        <p class="text-on-surface-variant">${item}</p>
+      </div>
+    `));
+  });
+
+  // Quick facts
+  const facts = data.quickFacts || {};
+  const factsList = document.getElementById('quick-facts');
+  factsList.innerHTML = '';
+  const factDefs = [
+    { icon: 'groups', color: 'text-primary', label: 'Population', value: facts.population },
+    { icon: 'translate', color: 'text-secondary', label: 'Language', value: facts.language },
+    { icon: 'schedule', color: 'text-tertiary', label: 'Best Time', value: facts.bestTime },
+    { icon: 'payments', color: 'text-error', label: 'Currency', value: facts.currency },
+  ];
+  factDefs.filter(f => f.value).forEach(f => {
+    factsList.appendChild(el(`
+      <div class="glass-card px-8 py-6 rounded-3xl flex items-center gap-4">
+        <span class="material-symbols-outlined ${f.color}">${f.icon}</span>
+        <div>
+          <div class="text-label-sm text-on-surface-variant uppercase">${f.label}</div>
+          <div class="font-bold">${f.value}</div>
+        </div>
+      </div>
+    `));
+  });
 }
